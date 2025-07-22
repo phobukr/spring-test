@@ -1,0 +1,30 @@
+package com.example.springtest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+import com.example.springtest.models.AuthorCreate;
+import com.example.springtest.models.AuthorRead;
+import com.example.springtest.services.AuthorService;
+
+@RestController
+@Validated
+public class AuthorController {
+
+    @Autowired
+    private AuthorService authorService;
+
+    @PostMapping("/authors/")
+    public ResponseEntity<AuthorRead> createAuthor(@RequestBody @Validated AuthorCreate authorCreate) {
+        try {
+            AuthorRead authorRead = authorService.createAuthor(authorCreate);
+            return ResponseEntity.status(HttpStatus.CREATED).body(authorRead);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+}
