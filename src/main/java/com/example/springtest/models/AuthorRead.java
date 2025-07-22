@@ -1,8 +1,15 @@
 package com.example.springtest.models;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+
 public class AuthorRead {
     private Long id;
+    
+    @NotNull
     private String name;
+    
+    @Email
     private String email;
 
     public AuthorRead(Long id, String name, String email) {
