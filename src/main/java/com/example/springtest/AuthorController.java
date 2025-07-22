@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +24,9 @@ public class AuthorController {
     @PostMapping("/authors/")
     public ResponseEntity<AuthorRead> createAuthor(@RequestBody @Validated AuthorCreate authorCreate) {
         try {
+            if (authorCreate == null) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            }
             AuthorRead authorRead = authorService.createAuthor(authorCreate);
             return ResponseEntity.status(HttpStatus.CREATED).body(authorRead);
         } catch (Exception e) {
@@ -34,6 +38,25 @@ public class AuthorController {
     public ResponseEntity<List<AuthorRead>> listAuthors() {
         try {
             List<AuthorRead> authors = authorService.listAuthors();
+            if (authors == null) {
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            }
+            return ResponseEntity.ok(authors);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/authors/genre/{genre}")
+    public ResponseEntity<List<AuthorRead>> getAuthorsByGenre(@PathVariable String genre) {
+        try {
+            if (genre == null || genre.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            }
+            List<AuthorRead> authors = authorService.getAuthorsByGenre(genre);
+            if (authors == null || authors.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            }
             return ResponseEntity.ok(authors);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

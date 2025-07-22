@@ -1,21 +1,27 @@
 package com.example.springtest.models;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
+import java.util.List;
+import com.example.springtest.models.Author;
 
 public class AuthorRead {
     private Long id;
     
-    @NotNull
     private String name;
     
-    @Email
     private String email;
+    private List<String> genre;
 
     public AuthorRead(Long id, String name, String email) {
         this.id = id;
         this.name = name;
         this.email = email;
+    }
+
+    public AuthorRead(Long id, String name, String email, List<String> genre) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.genre = genre;
     }
 
     public Long getId() {
@@ -40,5 +46,13 @@ public class AuthorRead {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<String> getGenre() {
+        return genre;
+    }
+
+    public void setGenre(List<String> genre) {
+        this.genre = genre;
     }
 }

@@ -17,6 +17,7 @@ public class Book {
     private String publisher;
     private Integer numberOfPages;
     private String isbn;
+    private String genre;
 
     public Book() {}
 
@@ -27,6 +28,16 @@ public class Book {
         this.publisher = publisher;
         this.numberOfPages = numberOfPages;
         this.isbn = isbn;
+    }
+
+    public Book(String title, String author, LocalDate publicationDate, String publisher, Integer numberOfPages, String isbn, String genre) {
+        this.title = title;
+        this.author = author;
+        this.publicationDate = publicationDate;
+        this.publisher = publisher;
+        this.numberOfPages = numberOfPages;
+        this.isbn = isbn;
+        this.genre = genre;
     }
 
     public Long getId() {
@@ -85,6 +96,14 @@ public class Book {
         this.isbn = isbn;
     }
 
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
@@ -95,6 +114,7 @@ public class Book {
                 ", publisher='" + publisher + '\'' +
                 ", numberOfPages=" + numberOfPages +
                 ", isbn='" + isbn + '\'' +
+                ", genre='" + genre + '\'' +
                 '}';
     }
 }
