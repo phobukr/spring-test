@@ -2,6 +2,7 @@ package com.example.springtest.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 import com.example.springtest.models.AuthorCreate;
@@ -50,6 +51,18 @@ public class AuthorService {
                 .collect(Collectors.toList());
         } catch (Exception e) {
             logger.error("Error listing authors: {}", e.getMessage());
+            return List.of();
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public List<AuthorRead> getAuthorsByGenre(String genre) {
+        try {
+            return authorRepository.findByGenre(genre).stream()
+                .map(author -> new AuthorRead(author.getId(), author.getName(), author.getBio()))
+                .collect(Collectors.toList());
+        } catch (Exception e) {
+            logger.error("Error retrieving authors by genre: {}", e.getMessage());
             return List.of();
         }
     }

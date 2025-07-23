@@ -1,17 +1,20 @@
 package com.example.springtest.models;
 
-import java.util.Objects;
+import javax.persistence.*;
+import java.time.LocalDate;
 
 public class BookRead {
-    private Long id;
+    private Integer id;
     private String title;
-    private String author;
+    private Integer authorId;
+    private String genre;
+    private LocalDate publicationDate;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -23,11 +26,27 @@ public class BookRead {
         this.title = title;
     }
 
-    public String getAuthor() {
-        return author;
+    public Integer getAuthorId() {
+        return authorId;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setAuthorId(Integer authorId) {
+        this.authorId = authorId;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public LocalDate getPublicationDate() {
+        return publicationDate;
+    }
+
+    public void setPublicationDate(LocalDate publicationDate) {
+        this.publicationDate = publicationDate;
     }
 }
