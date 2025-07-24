@@ -4,6 +4,7 @@ import com.example.springtest.dto.BookCreate;
 import com.example.springtest.dto.BookRead;
 import com.example.springtest.entities.Book;
 import com.example.springtest.repositories.BookRepository;
+import com.example.springtest.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +41,36 @@ public class BookService {
         } catch (Exception e) {
             throw new RuntimeException("Error creating book", e);
         }
+    }
+
+    public List<BookRead> getBooksByAuthor(Integer authorId) {
+        try {
+            return bookRepository.findByAuthorId(authorId).stream()
+                    .map(this::mapToBookRead)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new RuntimeException("Error retrieving books by author", e);
+        }
+    }
+
+    public List<BookRead> getBooksByAuthorAndGenre(Integer authorId, String genre) {
+        try {
+            return bookRepository.findByAuthorIdAndGenre(authorId, genre).stream()
+                    .map(this::mapToBookRead)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new RuntimeException("Error retrieving books by author and genre", e);
+        }
+    }
+
+    public List<BookRead> getBooksByGenre(String genre) {
+        List<Book> books = bookRepository.findByGenre(genre);
+        if (books.isEmpty()) {
+            throw new ResourceNotFoundException("No books found for genre: " + genre);
+        }
+        return books.stream()
+                .map(this::mapToBookRead)
+                .collect(Collectors.toList());
     }
 
     private BookRead mapToBookRead(Book book) {
