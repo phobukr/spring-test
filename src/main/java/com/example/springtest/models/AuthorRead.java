@@ -1,21 +1,17 @@
 package com.example.springtest.models;
 
-import javax.validation.constraints.Email;
+import java.io.Serializable;
 import javax.validation.constraints.NotNull;
 
-public class AuthorRead {
+public class AuthorRead implements Serializable {
     private Long id;
     
     @NotNull
     private String name;
-    
-    @Email
-    private String email;
 
-    public AuthorRead(Long id, String name, String email) {
+    public AuthorRead(Long id, String name) {
         this.id = id;
         this.name = name;
-        this.email = email;
     }
 
     public Long getId() {
@@ -32,13 +28,5 @@ public class AuthorRead {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 }
