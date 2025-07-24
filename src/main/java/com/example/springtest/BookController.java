@@ -3,6 +3,7 @@ package com.example.springtest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,5 +31,11 @@ public class BookController {
     public ResponseEntity<BookRead> createBook(BookCreate bookCreate) {
         BookRead bookRead = bookService.createBook(bookCreate);
         return ResponseEntity.ok(bookRead);
+    }
+
+    @GetMapping("/author/{authorId}")
+    public ResponseEntity<List<BookRead>> getBooksByAuthor(@PathVariable Long authorId) {
+        List<BookRead> books = bookService.getBooksByAuthor(authorId);
+        return ResponseEntity.ok(books);
     }
 }

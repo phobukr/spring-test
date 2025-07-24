@@ -26,4 +26,14 @@ public class DatabaseConfig {
     public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);
     }
+
+    @Bean
+    public DataSource dataSource() {
+        org.apache.commons.dbcp2.BasicDataSource dataSource = new org.apache.commons.dbcp2.BasicDataSource();
+        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/springtest");
+        dataSource.setUsername("root");
+        dataSource.setPassword("password");
+        return dataSource;
+    }
 }

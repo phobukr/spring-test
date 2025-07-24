@@ -10,30 +10,47 @@ import java.time.LocalDate;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     private String title;
-    private String author;
+    private Author author;
     private LocalDate publicationDate;
     private String publisher;
     private Integer numberOfPages;
     private String isbn;
+    private String genre;
 
     public Book() {}
 
     public Book(String title, String author, LocalDate publicationDate, String publisher, Integer numberOfPages, String isbn) {
         this.title = title;
-        this.author = author;
+        this.author = new Author(author);
         this.publicationDate = publicationDate;
         this.publisher = publisher;
         this.numberOfPages = numberOfPages;
         this.isbn = isbn;
     }
 
-    public Long getId() {
+    public Book(String title, String author, LocalDate publicationDate, String publisher, Integer numberOfPages, String isbn, String genre) {
+        this.title = title;
+        this.author = new Author(author);
+        this.publicationDate = publicationDate;
+        this.publisher = publisher;
+        this.numberOfPages = numberOfPages;
+        this.isbn = isbn;
+        this.genre = genre;
+    }
+
+    public Book(String title, Author author, String genre) {
+        this.title = title;
+        this.author = author;
+        this.genre = genre;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -45,11 +62,11 @@ public class Book {
         this.title = title;
     }
 
-    public String getAuthor() {
+    public Author getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(Author author) {
         this.author = author;
     }
 
@@ -85,16 +102,25 @@ public class Book {
         this.isbn = isbn;
     }
 
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", author='" + author + '\'' +
+                ", author=" + author +
                 ", publicationDate=" + publicationDate +
                 ", publisher='" + publisher + '\'' +
                 ", numberOfPages=" + numberOfPages +
                 ", isbn='" + isbn + '\'' +
+                ", genre='" + genre + '\'' +
                 '}';
     }
 }
