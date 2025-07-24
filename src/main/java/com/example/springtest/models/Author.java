@@ -31,4 +31,25 @@ public class Author {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "Author{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Author author = (Author) o;
+        return id.equals(author.id) && name.equals(author.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hash(id, name);
+    }
 }

@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import java.time.LocalDate;
 
 @Entity
@@ -17,6 +18,9 @@ public class Book {
     private String publisher;
     private Integer numberOfPages;
     private String isbn;
+    private String genre;
+    @OneToOne
+    private Author authorEntity;
 
     public Book() {}
 
@@ -27,6 +31,22 @@ public class Book {
         this.publisher = publisher;
         this.numberOfPages = numberOfPages;
         this.isbn = isbn;
+    }
+
+    public Book(String title, String author, LocalDate publicationDate, String publisher, Integer numberOfPages, String isbn, String genre) {
+        this.title = title;
+        this.author = author;
+        this.publicationDate = publicationDate;
+        this.publisher = publisher;
+        this.numberOfPages = numberOfPages;
+        this.isbn = isbn;
+        this.genre = genre;
+    }
+
+    public Book(String title, Author authorEntity, String genre) {
+        this.title = title;
+        this.authorEntity = authorEntity;
+        this.genre = genre;
     }
 
     public Long getId() {
@@ -85,6 +105,22 @@ public class Book {
         this.isbn = isbn;
     }
 
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public Author getAuthorEntity() {
+        return authorEntity;
+    }
+
+    public void setAuthorEntity(Author authorEntity) {
+        this.authorEntity = authorEntity;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
@@ -95,6 +131,8 @@ public class Book {
                 ", publisher='" + publisher + '\'' +
                 ", numberOfPages=" + numberOfPages +
                 ", isbn='" + isbn + '\'' +
+                ", genre='" + genre + '\'' +
+                ", authorEntity=" + authorEntity +
                 '}';
     }
 }

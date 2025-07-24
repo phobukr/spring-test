@@ -32,3 +32,21 @@ public class BookController {
         return ResponseEntity.ok(bookRead);
     }
 }
+
+@RestController
+@RequestMapping("/books/filter")
+class BookFilterController {
+
+    private final BookService bookService;
+
+    @Autowired
+    public BookFilterController(BookService bookService) {
+        this.bookService = bookService;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<BookRead>> getBooksByAuthorAndGenre(String author, String genre) {
+        List<BookRead> books = bookService.getBooksByAuthorAndGenre(author, genre);
+        return ResponseEntity.ok(books);
+    }
+}
