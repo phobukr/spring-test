@@ -1,11 +1,15 @@
 package com.example.springtest.models;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Objects;
 
+@Entity
 public class BookRead {
     private Long id;
     private String title;
-    private String author;
+    private Integer authorId;
+    private String genre;
 
     public Long getId() {
         return id;
@@ -23,11 +27,19 @@ public class BookRead {
         this.title = title;
     }
 
-    public String getAuthor() {
-        return author;
+    public Integer getAuthorId() {
+        return authorId;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setAuthorId(Integer authorId) {
+        this.authorId = authorId;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 }

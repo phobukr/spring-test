@@ -42,6 +42,36 @@ public class BookService {
         }
     }
 
+    public List<BookRead> getBooksByAuthor(Integer authorId) {
+        try {
+            return bookRepository.findByAuthorId(authorId).stream()
+                    .map(this::mapToBookRead)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new RuntimeException("Error retrieving books by author", e);
+        }
+    }
+
+    public List<BookRead> getBooksByAuthorAndGenre(Integer authorId, String genre) {
+        try {
+            return bookRepository.findByAuthorIdAndGenre(authorId, genre).stream()
+                    .map(this::mapToBookRead)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new RuntimeException("Error retrieving books by author and genre", e);
+        }
+    }
+
+    public List<BookRead> getBooksByGenre(String genre) {
+        try {
+            return bookRepository.findByGenre(genre).stream()
+                    .map(this::mapToBookRead)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new RuntimeException("Error retrieving books by genre", e);
+        }
+    }
+
     private BookRead mapToBookRead(Book book) {
         BookRead bookRead = new BookRead();
         bookRead.setId(book.getId());
