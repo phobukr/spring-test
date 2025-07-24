@@ -1,9 +1,14 @@
 package com.example.springtest.models;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
-public class AuthorRead {
+@Entity
+public class AuthorRead implements Serializable {
+    @Id
     private Long id;
     
     @NotNull
@@ -12,10 +17,19 @@ public class AuthorRead {
     @Email
     private String email;
 
+    private String genre;
+
     public AuthorRead(Long id, String name, String email) {
         this.id = id;
         this.name = name;
         this.email = email;
+    }
+
+    public AuthorRead(Long id, String name, String email, String genre) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.genre = genre;
     }
 
     public Long getId() {
@@ -40,5 +54,13 @@ public class AuthorRead {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 }

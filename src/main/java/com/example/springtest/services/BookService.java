@@ -1,52 +1,29 @@
 package com.example.springtest.services;
 
-import com.example.springtest.dto.BookCreate;
-import com.example.springtest.dto.BookRead;
-import com.example.springtest.entities.Book;
-import com.example.springtest.repositories.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.stream.Collectors;
+import com.example.springtest.repositories.BookRepository;
+import com.example.springtest.models.BookRead;
+import com.example.springtest.models.Book;
+import org.springframework.dao.DataAccessException;
 
 @Service
 public class BookService {
 
-    private final BookRepository bookRepository;
-
     @Autowired
-    public BookService(BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
-    }
+    private BookRepository bookRepository;
 
-    public List<BookRead> retrieveBooks() {
+    public List<BookRead> getBooksByAuthor(Integer authorId) {
         try {
-            return bookRepository.findAll().stream()
-                    .map(this::mapToBookRead)
-                    .collect(Collectors.toList());
+            List<Book> books = bookRepository.findByAuthorId(authorId);
+            return books.stream()
+                        .map(book -> new BookRead(book.getId(), book.getTitle(), book.getAuthorId()))
+                        .toList();
+        } catch (DataAccessException e) {
+            throw new RuntimeException("Database access error while retrieving books for authorId: " + authorId, e);
         } catch (Exception e) {
-            throw new RuntimeException("Error retrieving books", e);
+            throw new RuntimeException("Unexpected error while retrieving books for authorId: " + authorId, e);
         }
-    }
-
-    public BookRead createBook(BookCreate bookCreate) {
-        try {
-            Book book = new Book();
-            book.setTitle(bookCreate.getTitle());
-            book.setAuthor(bookCreate.getAuthor());
-            book = bookRepository.save(book);
-            return mapToBookRead(book);
-        } catch (Exception e) {
-            throw new RuntimeException("Error creating book", e);
-        }
-    }
-
-    private BookRead mapToBookRead(Book book) {
-        BookRead bookRead = new BookRead();
-        bookRead.setId(book.getId());
-        bookRead.setTitle(book.getTitle());
-        bookRead.setAuthor(book.getAuthor());
-        return bookRead;
     }
 }
