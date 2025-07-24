@@ -39,7 +39,7 @@ public class AuthorService {
                 .collect(Collectors.toList());
         } catch (Exception e) {
             logger.error("Error retrieving authors: {}", e.getMessage());
-            return List.of();
+            throw e;
         }
     }
 
@@ -50,7 +50,22 @@ public class AuthorService {
                 .collect(Collectors.toList());
         } catch (Exception e) {
             logger.error("Error listing authors: {}", e.getMessage());
-            return List.of();
+            throw e;
+        }
+    }
+
+    public List<AuthorRead> getAuthorsByGenre(String genre) {
+        try {
+            List<Author> authors = authorRepository.findByGenre(genre);
+            if (authors.isEmpty()) {
+                throw new RuntimeException("No authors found for genre: " + genre);
+            }
+            return authors.stream()
+                .map(author -> new AuthorRead(author.getId(), author.getName(), author.getBio()))
+                .collect(Collectors.toList());
+        } catch (Exception e) {
+            logger.error("Error retrieving authors by genre: {}", e.getMessage());
+            throw e;
         }
     }
 }

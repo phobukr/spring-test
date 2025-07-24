@@ -1,6 +1,5 @@
 package com.example.springtest.services;
 
-import com.example.springtest.dto.BookCreate;
 import com.example.springtest.dto.BookRead;
 import com.example.springtest.entities.Book;
 import com.example.springtest.repositories.BookRepository;
@@ -20,25 +19,33 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    public List<BookRead> retrieveBooks() {
+    public List<BookRead> getBooksByAuthor(Integer authorId) {
         try {
-            return bookRepository.findAll().stream()
+            return bookRepository.findBooksByAuthor(authorId).stream()
                     .map(this::mapToBookRead)
                     .collect(Collectors.toList());
         } catch (Exception e) {
-            throw new RuntimeException("Error retrieving books", e);
+            throw new RuntimeException("Error retrieving books by author", e);
         }
     }
 
-    public BookRead createBook(BookCreate bookCreate) {
+    public List<BookRead> getBooksByAuthorAndGenre(Integer authorId, String genre) {
         try {
-            Book book = new Book();
-            book.setTitle(bookCreate.getTitle());
-            book.setAuthor(bookCreate.getAuthor());
-            book = bookRepository.save(book);
-            return mapToBookRead(book);
+            return bookRepository.findBooksByAuthorAndGenre(authorId, genre).stream()
+                    .map(this::mapToBookRead)
+                    .collect(Collectors.toList());
         } catch (Exception e) {
-            throw new RuntimeException("Error creating book", e);
+            throw new RuntimeException("Error retrieving books by author and genre", e);
+        }
+    }
+
+    public List<BookRead> getBooksByGenre(String genre) {
+        try {
+            return bookRepository.findBooksByGenre(genre).stream()
+                    .map(this::mapToBookRead)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new RuntimeException("Error retrieving books by genre", e);
         }
     }
 
