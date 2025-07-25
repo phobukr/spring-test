@@ -4,7 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import java.time.LocalDate;
+import java.util.*;
 
 @Entity
 public class Book {
@@ -13,6 +15,7 @@ public class Book {
     private Long id;
     private String title;
     private String author;
+    private String genre;
     private LocalDate publicationDate;
     private String publisher;
     private Integer numberOfPages;
@@ -23,6 +26,16 @@ public class Book {
     public Book(String title, String author, LocalDate publicationDate, String publisher, Integer numberOfPages, String isbn) {
         this.title = title;
         this.author = author;
+        this.publicationDate = publicationDate;
+        this.publisher = publisher;
+        this.numberOfPages = numberOfPages;
+        this.isbn = isbn;
+    }
+
+    public Book(String title, String author, String genre, LocalDate publicationDate, String publisher, Integer numberOfPages, String isbn) {
+        this.title = title;
+        this.author = author;
+        this.genre = genre;
         this.publicationDate = publicationDate;
         this.publisher = publisher;
         this.numberOfPages = numberOfPages;
@@ -51,6 +64,14 @@ public class Book {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 
     public LocalDate getPublicationDate() {
@@ -91,6 +112,7 @@ public class Book {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", author='" + author + '\'' +
+                ", genre='" + genre + '\'' +
                 ", publicationDate=" + publicationDate +
                 ", publisher='" + publisher + '\'' +
                 ", numberOfPages=" + numberOfPages +

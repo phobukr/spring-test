@@ -4,9 +4,11 @@ import com.example.springtest.dto.BookCreate;
 import com.example.springtest.dto.BookRead;
 import com.example.springtest.entities.Book;
 import com.example.springtest.repositories.BookRepository;
+import javax.persistence.Entity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,5 +50,35 @@ public class BookService {
         bookRead.setTitle(book.getTitle());
         bookRead.setAuthor(book.getAuthor());
         return bookRead;
+    }
+
+    public List<BookRead> getBooksByAuthor(String author) {
+        try {
+            return bookRepository.findByAuthor(author).stream()
+                    .map(this::mapToBookRead)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new RuntimeException("Error retrieving books by author", e);
+        }
+    }
+
+    public List<BookRead> getBooksByAuthorAndGenre(String author, String genre) {
+        try {
+            return bookRepository.getBooksByAuthorAndGenre(author, genre).stream()
+                    .map(this::mapToBookRead)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new RuntimeException("Error retrieving books by author and genre", e);
+        }
+    }
+
+    public List<BookRead> getBooksByGenre(String genre) {
+        try {
+            return bookRepository.findByGenre(genre).stream()
+                    .map(this::mapToBookRead)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new RuntimeException("Error retrieving books by genre", e);
+        }
     }
 }
