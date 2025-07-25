@@ -49,4 +49,46 @@ public class BookService {
         bookRead.setAuthor(book.getAuthor());
         return bookRead;
     }
+
+    public List<BookRead> listBooks(String title, String author) {
+        try {
+            List<Book> books = bookRepository.findAll();
+            return books.stream()
+                    .filter(book -> (title == null || book.getTitle().contains(title))
+                            && (author == null || book.getAuthor().contains(author)))
+                    .map(this::mapToBookRead)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new RuntimeException("Error listing books", e);
+        }
+    }
+
+    public List<BookRead> listBooks() {
+        try {
+            return bookRepository.findAll().stream()
+                    .map(this::mapToBookRead)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new RuntimeException("Error listing books", e);
+        }
+    }
+
+    public BookRead getBook(Long id) {
+        try {
+            Book book = bookRepository.findById(id).orElseThrow();
+            return mapToBookRead(book);
+        } catch (Exception e) {
+            throw new RuntimeException("Error getting book", e);
+        }
+    }
+
+    public List<BookRead> getBooks() {
+        try {
+            return bookRepository.findAll().stream()
+                    .map(this::mapToBookRead)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new RuntimeException("Error getting books", e);
+        }
+    }
 }

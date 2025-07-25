@@ -4,10 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+
+import com.example.springtest.models.Book;
+import com.example.springtest.models.BookCreate;
+import com.example.springtest.models.BookRead;
 
 @RestController
 @RequestMapping("/books")
@@ -26,9 +31,15 @@ public class BookController {
         return ResponseEntity.ok(books);
     }
 
+    @GetMapping("/getBooks")
+    public ResponseEntity<List<Book>> getBooks() {
+        List<Book> books = bookService.getBooks();
+        return ResponseEntity.ok(books);
+    }
+
     @PostMapping
-    public ResponseEntity<BookRead> createBook(BookCreate bookCreate) {
-        BookRead bookRead = bookService.createBook(bookCreate);
-        return ResponseEntity.ok(bookRead);
+    public ResponseEntity<Book> createBook(@RequestBody BookCreate bookCreate) {
+        Book book = bookService.createBook(bookCreate);
+        return ResponseEntity.ok(book);
     }
 }
