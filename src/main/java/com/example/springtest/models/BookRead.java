@@ -1,7 +1,5 @@
 package com.example.springtest.models;
 
-import java.util.Objects;
-
 public class BookRead {
     private Long id;
     private String title;

@@ -22,31 +22,19 @@ public class AuthorService {
     public AuthorRead createAuthor(AuthorCreate authorCreate) {
         Author author = new Author();
         author.setName(authorCreate.getName());
-        author.setBio(authorCreate.getBio());
         try {
             author = authorRepository.save(author);
         } catch (Exception e) {
             logger.error("Error creating author: {}", e.getMessage());
             throw e;
         }
-        return new AuthorRead(author.getId(), author.getName(), author.getBio());
-    }
-
-    public List<AuthorRead> getAuthors() {
-        try {
-            return authorRepository.findAll().stream()
-                .map(author -> new AuthorRead(author.getId(), author.getName(), author.getBio()))
-                .collect(Collectors.toList());
-        } catch (Exception e) {
-            logger.error("Error retrieving authors: {}", e.getMessage());
-            return List.of();
-        }
+        return new AuthorRead(author.getId(), author.getName(), "");
     }
 
     public List<AuthorRead> listAuthors() {
         try {
             return authorRepository.findAll().stream()
-                .map(author -> new AuthorRead(author.getId(), author.getName(), author.getBio()))
+                .map(author -> new AuthorRead(author.getId(), author.getName(), ""))
                 .collect(Collectors.toList());
         } catch (Exception e) {
             logger.error("Error listing authors: {}", e.getMessage());

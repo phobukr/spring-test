@@ -1,8 +1,8 @@
 package com.example.springtest.services;
 
-import com.example.springtest.dto.BookCreate;
-import com.example.springtest.dto.BookRead;
-import com.example.springtest.entities.Book;
+import com.example.springtest.models.BookCreate;
+import com.example.springtest.models.BookRead;
+import com.example.springtest.models.Book;
 import com.example.springtest.repositories.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
