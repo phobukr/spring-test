@@ -26,3 +26,11 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+wrapper {
+    gradleVersion = '7.5'
+    distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
+}
+task wrapper(type: Wrapper) {
+    gradleVersion = '7.5'
+}
