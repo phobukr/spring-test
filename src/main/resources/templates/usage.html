@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Fibonacci Usage</title>
+</head>
+<body>
+    <h1>Fibonacci Numbers</h1>
+    <p th:text="${fibonacciNumbers}">Fibonacci numbers will be displayed here</p>
+    <form th:action="@{/fibUsage}" method="post">
+        <input type="number" name="n" placeholder="Enter a number">
+        <input type="submit" value="Generate Fibonacci Numbers">
+    </form>
+    <div th:if="${errorMessage != null}" th:text="${errorMessage}">Error message will be displayed here</div>
+</body>
+</html>

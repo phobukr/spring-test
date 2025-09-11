@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Fibonacci Numbers</title>
+</head>
+<body>
+    <h1>Fibonacci Numbers</h1>
+    <ul th:each="num : ${fibonacciNumbers}">
+        <li th:text="${num}">Number</li>
+    </ul>
+    <p th:if="${error}" th:text="${error}">Error</p>
+</body>
+</html>
